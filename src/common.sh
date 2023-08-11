@@ -9,5 +9,5 @@ log() {
 }
 
 logInfo() {
-  log "info" "$1"
+  log "$1" "info" "$2"
 }

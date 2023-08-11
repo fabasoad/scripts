@@ -3,6 +3,7 @@
 SCRIPT_PATH=$(realpath "$0")
 SCRIPTS_BASE_FOLDER_PATH=$(dirname "$SCRIPT_PATH")
 
+# shellcheck source=src/common.sh
 . "$SCRIPTS_BASE_FOLDER_PATH/common.sh"
 
 src=$1

@@ -9,5 +9,5 @@ log() {
 }
 
 log_info() {
-  log "info" "${1}" "${2}"
+  log "info" "$(basename "$0")" "${1}"
 }

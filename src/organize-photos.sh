@@ -33,7 +33,7 @@ main() {
       new_filename="${year}-${month}-${day}_${hr}-${min}-${sec}.${ext}"
       new_location="${src}/${new_folder}/${new_filename}"
       mv "${f}" "${new_location}"
-      log_info "$(basename "$0")" "Moved ${old_filename} to ${new_folder}/${new_filename}"
+      log_info "Moved ${old_filename} to ${new_folder}/${new_filename}"
     fi
   done
 }

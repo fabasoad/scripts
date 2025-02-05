@@ -1,0 +1,6 @@
+---
+# Configuration variables in array of strings defined in your repository or
+# organization. `null` means disabling configuration variables check.
+# Empty array means no configuration variable is allowed.
+config-variables:
+  - GH_APP_ID_BUMP_PRE_COMMIT

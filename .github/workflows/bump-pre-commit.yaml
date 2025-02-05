@@ -51,7 +51,7 @@ jobs:
             --cleanup \
             --no-confirm \
             --visibility public \
-            --affiliations owner \
+            --affiliations collaborator \
             --regex "${INPUT_REGEX}" \
             ./bump-pre-commit.sh \
             "${GH_TOKEN}"

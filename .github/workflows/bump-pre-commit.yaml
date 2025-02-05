@@ -29,15 +29,17 @@ jobs:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
 
-      - name: Install mtoohey31/gh-foreach
-        run: gh extension install mtoohey31/gh-foreach
-
       - name: Create GitHub token
         uses: actions/create-github-app-token@v1
         id: gh-app-bump-pre-commit
         with:
           app-id: ${{ vars.GH_APP_ID_BUMP_PRE_COMMIT }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY_BUMP_PRE_COMMIT }}
+
+      - name: Install mtoohey31/gh-foreach
+        env:
+          GH_TOKEN: "${{ steps.gh-app-bump-pre-commit.outputs.token }}"
+        run: gh extension install mtoohey31/gh-foreach
 
       - name: Run script
         env:

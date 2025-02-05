@@ -35,6 +35,7 @@ jobs:
         with:
           app-id: ${{ vars.GH_APP_ID_BUMP_PRE_COMMIT }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY_BUMP_PRE_COMMIT }}
+          owner: ${{ github.repository_owner }}
 
       - name: Install mtoohey31/gh-foreach
         env:

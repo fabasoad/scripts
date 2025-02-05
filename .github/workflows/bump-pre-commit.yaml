@@ -10,11 +10,10 @@ on:
       regex:
         description: "Repo names regex:"
         required: true
-        default: "^(.*)$"
+        default: "^(.+jolie.+)$"
         type: string
 
-permissions:
-  contents: read
+permissions: read-all
 
 defaults:
   run:

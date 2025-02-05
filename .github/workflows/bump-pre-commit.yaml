@@ -44,15 +44,15 @@ jobs:
 
       - name: Run script
         env:
-          GH_TOKEN: "${{ steps.gh-app-bump-pre-commit.outputs.token }}"
+          GH_TOKEN: "${{ github.token }}"
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
         run: |
           gh foreach run \
             --cleanup \
             --no-confirm \
             --visibility public \
-            --affiliations organization_member \
+            --affiliations owner \
             --regex "${INPUT_REGEX}" \
             ./bump-pre-commit.sh \
-            "${GH_TOKEN}"
+            "${{ steps.gh-app-bump-pre-commit.outputs.token }}"
         working-directory: ${{ github.workspace }}/src

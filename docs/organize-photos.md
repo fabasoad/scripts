@@ -1,13 +1,12 @@
-# List of scripts
-
-## [organize.sh](../src/organize.sh)
+# Organize photos
 
 > :information_source: Supported OS: macOS
 
-Script to organize and group photos and videos from iPhone per folders based on
-dates. It is needed for easily uploading them to the cloud.
+[Script](../src/organize-photos.sh) to organize and group photos and videos from
+iPhone per folders based on dates. It is needed for easily uploading them to the
+cloud.
 
-### How to use organize.sh
+## How to use
 
 1. Plugin iPhone into macbook via cable.
 2. Trust devices on both iPhone and macbook.
@@ -23,7 +22,7 @@ dates. It is needed for easily uploading them to the cloud.
 
    ```shell
    cd scripts/src
-   ./organize.sh <Path to the folder with photos and videos>
+   ./organize-photos.sh <Path to the folder with photos and videos>
    # You should see logs with the information of each moved file
    ls -la <Path to the folder with photos and videos>
    # Be sure that you do not see any photos and videos here but "YYYY.MM.DD"

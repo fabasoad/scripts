@@ -49,5 +49,5 @@ jobs:
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
-            "./bump-pre-commit.sh ${GH_TOKEN}"
+            ./bump-pre-commit.sh
         working-directory: ${{ github.workspace }}/src

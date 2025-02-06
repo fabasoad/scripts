@@ -41,11 +41,12 @@ jobs:
       - name: Run script
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
-          SHELL: sh
         run: |
+          which sh
           gh foreach run \
             --cleanup \
             --no-confirm \
+            --shell $(which sh) \
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \

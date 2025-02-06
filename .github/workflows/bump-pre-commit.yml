@@ -1,5 +1,5 @@
 ---
-name: Bump Pre-commit
+name: Bump pre-commit
 
 on:
   schedule:

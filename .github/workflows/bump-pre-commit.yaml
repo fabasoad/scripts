@@ -10,7 +10,7 @@ on:
       regex:
         description: "Repo names regex:"
         required: true
-        default: "^(.+jolie.+)$"
+        default: "^(.*)$"
         type: string
 
 permissions: write-all

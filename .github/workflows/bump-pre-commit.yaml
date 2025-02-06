@@ -35,6 +35,9 @@ jobs:
       - name: Install mtoohey31/gh-foreach
         run: gh extension install mtoohey31/gh-foreach
 
+      - name: Install pre-commit
+        run: pip install pre-commit
+
       - name: Run script
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
@@ -42,6 +45,7 @@ jobs:
           gh foreach run \
             --cleanup \
             --no-confirm \
+            --shell sh \
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \

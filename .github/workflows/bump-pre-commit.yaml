@@ -20,7 +20,7 @@ defaults:
     shell: sh
 
 env:
-  GH_TOKEN: "${{ secrets.GH_TOKEN_TEMP }}"
+  GH_TOKEN: "${{ secrets.GH_TOKEN }}"
   REGEX_DEFAULT: "^(.*)$"
 
 jobs:
@@ -42,10 +42,10 @@ jobs:
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
         run: |
+          echo $SHELL
           gh foreach run \
             --cleanup \
             --no-confirm \
-            --shell sh \
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \

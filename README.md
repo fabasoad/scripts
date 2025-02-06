@@ -3,12 +3,14 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![security](https://github.com/fabasoad/setup-jolie-action/actions/workflows/security.yml/badge.svg)
 ![linting](https://github.com/fabasoad/setup-jolie-action/actions/workflows/linting.yml/badge.svg)
+![bump-pre-commit](https://github.com/fabasoad/setup-jolie-action/actions/workflows/bump-pre-commit.yml/badge.svg)
 
 Repository with useful automation that I use for various needs.
 
 ## Automation
 
 - [Organize photos](./docs/organize-photos.md)
+- [Bump pre-commit](./docs/bump-pre-commit.md)
 
 ## Contributions
 

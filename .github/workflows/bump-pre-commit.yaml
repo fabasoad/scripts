@@ -20,7 +20,7 @@ defaults:
     shell: sh
 
 env:
-  GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+  GH_TOKEN: "${{ secrets.GH_TOKEN_TEMP }}"
   REGEX_DEFAULT: "^(.*)$"
 
 jobs:

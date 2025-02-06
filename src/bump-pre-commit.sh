@@ -16,6 +16,8 @@ main() {
     set -e
 
     if [ "${exit_code}" -eq 1 ]; then
+      git config user.email "fabasoad@gmail.com"
+      git config user.name "fabasoad"
       git config url."https://${1}@github.com/".insteadOf "https://github.com/"
       git add .
       git commit -m "chore: bump pre-commit hooks to the latest version"

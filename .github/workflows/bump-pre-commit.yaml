@@ -20,7 +20,7 @@ defaults:
     shell: sh
 
 env:
-  GH_TOKEN: "${{ github.token }}"
+  GH_TOKEN: "${{ secrets.GH_TOKEN }}"
   REGEX_DEFAULT: "^(.*)$"
 
 jobs:
@@ -35,24 +35,8 @@ jobs:
       - name: Install mtoohey31/gh-foreach
         run: gh extension install mtoohey31/gh-foreach
 
-      - name: Create GitHub token
-        uses: actions/create-github-app-token@v1
-        id: gh-app-bump-pre-commit
-        with:
-          app-id: ${{ vars.GH_APP_ID_BUMP_PRE_COMMIT }}
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY_BUMP_PRE_COMMIT }}
-          owner: ${{ github.repository_owner }}
-
       - name: Run script
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
-        run: |
-          gh foreach run \
-            --cleanup \
-            --no-confirm \
-            --visibility public \
-            --affiliations owner \
-            --regex "${INPUT_REGEX}" \
-            ./bump-pre-commit.sh \
-            "${{ steps.gh-app-bump-pre-commit.outputs.token }}"
+        run: ./bump-pre-commit.sh "${INPUT_REGEX}"
         working-directory: ${{ github.workspace }}/src

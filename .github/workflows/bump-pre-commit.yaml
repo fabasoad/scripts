@@ -38,6 +38,10 @@ jobs:
       - name: Install pre-commit
         run: pip install pre-commit
 
+      - name: Test clone
+        run: |
+          git clone https://oauth2:${GH_TOKEN}@github.com/fabasoad/setup-jolie-action.git
+
       - name: Run script
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"

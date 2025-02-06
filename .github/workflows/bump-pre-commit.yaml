@@ -38,5 +38,13 @@ jobs:
       - name: Run script
         env:
           INPUT_REGEX: "${{ inputs.regex || env.REGEX_DEFAULT }}"
-        run: ./bump-pre-commit.sh "${INPUT_REGEX}"
+        run: |
+          gh foreach run \
+            --cleanup \
+            --no-confirm \
+            --visibility public \
+            --affiliations owner \
+            --regex "${INPUT_REGEX}" \
+            ./bump-pre-commit.sh \
+            "${GH_TOKEN}"
         working-directory: ${{ github.workspace }}/src

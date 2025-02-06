@@ -6,7 +6,9 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
-bump_pre_commit() {
+main() {
+  token="${1}"
+
   if [ -f ".pre-commit-config.yaml" ]; then
     pre-commit autoupdate
 
@@ -16,7 +18,7 @@ bump_pre_commit() {
     set -e
 
     if [ "${exit_code}" -eq 1 ]; then
-      git config url."https://${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+      git config url."https://${token}@github.com/".insteadOf "https://github.com/"
       git add .
       git commit -m "chore: bump pre-commit hooks to the latest version"
       git push origin main
@@ -26,16 +28,6 @@ bump_pre_commit() {
   else
     log_info ".pre-commit-config.yaml file is not found"
   fi
-}
-
-main() {
-  gh foreach run \
-    --cleanup \
-    --no-confirm \
-    --visibility public \
-    --affiliations owner \
-    --regex "${1}" \
-    bump_pre_commit
 }
 
 main "$@"

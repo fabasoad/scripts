@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install mtoohey31/gh-foreach
         run: gh extension install mtoohey31/gh-foreach

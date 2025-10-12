@@ -52,16 +52,10 @@ jobs:
         run: ./pre.sh
         working-directory: src/automation
 
-      - name: Setup git config
-        run: |
-          app_name="${{ steps.github-app.outputs.app-slug }}[bot]"
-          user_id="$(gh api "/users/${app_name}" --jq .id)"
-          git config user.email "${user_id}+${app_name}@users.noreply.github.com"
-          git config user.name "${app_name}"
-
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
+          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: |
           echo "Directory 1: $(pwd)"
           gh foreach run \
@@ -71,4 +65,5 @@ jobs:
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
-            ./src/automation/main.sh
+            ./src/automation/main.sh \
+            "${{ steps.github-app.outputs.app-slug }}"

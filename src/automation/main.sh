@@ -7,12 +7,31 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
-main() {
-  echo "Directory 2: $(pwd)"
+setup_git_config() {
+  app_slug="${1}"
+
+  log_info "Setting up git config started."
+  app_name="${app_slug}[bot]"
+  user_id="$(gh api "/users/${app_name}" --jq .id)"
+  log_info "User ID: ${user_id}"
+  git config user.email "${user_id}+${app_name}@users.noreply.github.com"
+  git config user.name "${app_name}"
+  log_info "Setting up git config completed."
+}
+
+run_scripts() {
   log_info "Running automation scripts started."
   ${AUTOMATION_DIR_PATH}/bump-pre-commit/main.sh
   ${AUTOMATION_DIR_PATH}/run-dependabot/main.sh
   log_info "Running automation scripts completed."
+}
+
+main() {
+  app_slug="${1}"
+  echo "Directory 2: $(pwd)"
+
+  setup_git_config "${app_slug}"
+  run_scripts
 
   set +e
   git diff --quiet

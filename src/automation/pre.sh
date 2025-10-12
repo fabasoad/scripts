@@ -13,8 +13,8 @@ main() {
   echo "${RUNNER_TEMP}/bin" >> "${GITHUB_PATH}"
 
   log_info "Running pre-automation scripts started."
-  ${SRC_DIR_PATH}/bump-pre-commit/pre.sh
-  ${SRC_DIR_PATH}/run-dependabot/pre.sh
+  ${AUTOMATION_DIR_PATH}/bump-pre-commit/pre.sh
+  ${AUTOMATION_DIR_PATH}/run-dependabot/pre.sh
   log_info "Running pre-automation scripts completed."
 }
 

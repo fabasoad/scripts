@@ -1,5 +1,5 @@
 ---
-name: Bump pre-commit
+name: Automation
 
 on:
   schedule:

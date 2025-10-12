@@ -8,3 +8,8 @@ automation uses "fabasoad-contents-crud" GitHub App and runs every Friday at
 
 This script is used to bump the pre-commit version in the `.pre-commit-config.yaml`
 file within all `fabasoad` repositories.
+
+## Run dependabot
+
+This script is used to trigger Dependabot to check for dependency updates in
+all `fabasoad` repositories.

@@ -8,16 +8,14 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/logging.sh"
 
 setup_git_config() {
-  app_slug="${1}"
-  token="${2}"
+  token="${1}"
+  git_user_name="${2}"
+  git_user_email="${3}"
 
   log_info "Setting up git config started."
-  app_name="${app_slug}[bot]"
-  user_id="$(gh api "/users/${app_name}" --jq .id)"
-  log_info "User ID: ${user_id}"
-  git config user.email "${user_id}+${app_name}@users.noreply.github.com"
-  git config user.name "${app_name}"
   git config url."https://${token}@github.com/".insteadOf "https://github.com/"
+  git config user.name "${git_user_name}"
+  git config user.email "${git_user_email}"
   log_info "Setting up git config completed."
 }
 
@@ -29,11 +27,12 @@ run_scripts() {
 }
 
 main() {
-  app_slug="${1}"
-  token="${2}"
+  token="${1}"
+  git_user_name="${2}"
+  git_user_email="${3}"
   echo "Directory 2: $(pwd)"
 
-  setup_git_config "${app_slug}" "${token}"
+  setup_git_config "${token}" "${git_user_name}" "${git_user_email}"
   run_scripts
 
   set +e

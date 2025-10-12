@@ -48,13 +48,15 @@ jobs:
       - name: Install jq
         uses: dcarbone/install-jq-action@v3
 
-      - name: Debug
+      - name: Prepare git user
+        id: git-user
         env:
           GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: |
           app_name="${{ steps.github-app.outputs.app-slug }}[bot]"
           user_id="$(gh api "/users/${app_name}" --jq .id)"
-          echo "User ID: ${user_id}"
+          echo "email=${user_id}+${app_name}@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+          echo "name=${app_name}" >> "$GITHUB_OUTPUT"
 
       - name: Run pre-automation scripts
         env:
@@ -76,4 +78,6 @@ jobs:
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
             ./src/automation/main.sh \
-            "${{ steps.github-app.outputs.app-slug }}"
+            "${{ steps.github-app.outputs.token }}" \
+            "${{ steps.git-user.outputs.name }}" \
+            "${{ steps.git-user.outputs.email }}"

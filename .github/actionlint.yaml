@@ -6,4 +6,4 @@ self-hosted-runner:
 # organization. `null` means disabling configuration variables check.
 # Empty array means no configuration variable is allowed.
 config-variables:
-  - GH_APP_CONTENTS_CRUD_APP_ID
+  - GH_APP_ALL_CONTENTS_CRUD_APP_ID

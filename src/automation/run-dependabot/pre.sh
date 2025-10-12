@@ -41,7 +41,7 @@ main() {
     log_error "Windows ARM64 is not supported by dependabot/cli"
     exit 0
   fi
-  if [ -n "${os}" ] && [ -n "${arch}"]; then
+  if [ -n "${os}" ] && [ -n "${arch}" ]; then
     log_info "Installing dependabot..."
     gh release download --repo dependabot/cli -p "*${os}-${arch}.tar.gz"
     tar xzvf *.tar.gz >/dev/null 2>&1

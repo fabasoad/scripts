@@ -9,6 +9,7 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 setup_git_config() {
   app_slug="${1}"
+  token="${2}"
 
   log_info "Setting up git config started."
   app_name="${app_slug}[bot]"
@@ -16,6 +17,7 @@ setup_git_config() {
   log_info "User ID: ${user_id}"
   git config user.email "${user_id}+${app_name}@users.noreply.github.com"
   git config user.name "${app_name}"
+  git config url."https://${token}@github.com/".insteadOf "https://github.com/"
   log_info "Setting up git config completed."
 }
 
@@ -28,9 +30,10 @@ run_scripts() {
 
 main() {
   app_slug="${1}"
+  token="${2}"
   echo "Directory 2: $(pwd)"
 
-  setup_git_config "${app_slug}"
+  setup_git_config "${app_slug}" "${token}"
   run_scripts
 
   set +e

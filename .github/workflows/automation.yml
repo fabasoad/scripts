@@ -41,6 +41,8 @@ jobs:
           token: "${{ steps.github-app.outputs.token }}"
 
       - name: Install mtoohey31/gh-foreach
+        env:
+          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: gh extension install mtoohey31/gh-foreach
 
       - name: Install jq

@@ -1,0 +1,72 @@
+---
+name: Automation
+
+on:
+  schedule:
+    # Every Friday at 7 AM JST
+    - cron: "0 22 * * 4"
+  workflow_dispatch:
+    inputs:
+      regex:
+        description: "Repo names regex:"
+        required: true
+        default: "^(.*)$"
+        type: string
+
+permissions: write-all
+
+defaults:
+  run:
+    shell: sh
+
+env:
+  REGEX_DEFAULT: "^(.*)$"
+
+jobs:
+  run-automation:
+    name: Run automation
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 5
+    steps:
+      - name: Get GitHub token
+        uses: actions/create-github-app-token@v2
+        id: github-app
+        with:
+          app-id: ${{ vars.GH_APP_CONTENTS_CRUD_APP_ID }}
+          private-key: ${{ secrets.GH_APP_CONTENTS_CRUD_PRIVATE_KEY }}
+
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v5
+        with:
+          token: "${{ steps.github-app.outputs.token }}"
+
+      - name: Install mtoohey31/gh-foreach
+        run: gh extension install mtoohey31/gh-foreach
+
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v3
+
+      - name: Run pre-automation scripts
+        run: ./pre.sh
+        working-directory: src/automation
+
+      - name: Setup git config
+        run: |
+          app_name="${{ steps.github-app.outputs.app-slug }}[bot]"
+          user_id="$(gh api "/users/${app_name}" --jq .id)"
+          git config user.email "${user_id}+${app_name}@users.noreply.github.com"
+          git config user.name "${app_name}"
+
+      - name: Run automation scripts
+        env:
+          INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
+        run: |
+          echo "Directory 1: $(pwd)"
+          gh foreach run \
+            --cleanup \
+            --no-confirm \
+            --shell $(which sh) \
+            --visibility public \
+            --affiliations owner \
+            --regex "${INPUT_REGEX}" \
+            ./src/automation/main.sh

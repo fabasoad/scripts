@@ -70,7 +70,7 @@ jobs:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
           # Only user's (not bot) token works here because gh foreach plugin
           # uses /user/repos API endpoint to retrieve the list of repositories.
-          GH_TOKEN: "${{ github.token }}"
+          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
           echo "Directory 1: $(pwd)"
           gh foreach run \

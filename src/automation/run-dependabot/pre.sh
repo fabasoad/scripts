@@ -42,10 +42,9 @@ main() {
     exit 0
   fi
   if [ -n "${os}" ] && [ -n "${arch}" ]; then
-    log_info "dependabot installation started."
     gh release download --repo dependabot/cli -p "*${os}-${arch}.tar.gz"
     tar xzvf *.tar.gz >/dev/null 2>&1
-    log_info "dependabot installation completed: $(./dependabot version)"
+    log_info "$(./dependabot --version) installed successfully."
     mv dependabot "${RUNNER_TEMP}/bin/dependabot"
   fi
 }

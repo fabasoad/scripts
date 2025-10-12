@@ -67,7 +67,7 @@ jobs:
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
-          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
+          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
           echo "Directory 1: $(pwd)"
           gh foreach run \

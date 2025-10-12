@@ -34,6 +34,7 @@ jobs:
         with:
           app-id: ${{ vars.GH_APP_ALL_CONTENTS_CRUD_APP_ID }}
           private-key: ${{ secrets.GH_APP_ALL_CONTENTS_CRUD_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v5

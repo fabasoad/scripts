@@ -68,7 +68,9 @@ jobs:
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
-          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
+          # Only user's (not bot) token works here because gh foreach plugin
+          # uses /user/repos API endpoint to retrieve the list of repositories.
+          GH_TOKEN: "${{ github.token }}"
         run: |
           echo "Directory 1: $(pwd)"
           gh foreach run \
@@ -79,5 +81,6 @@ jobs:
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
             ${GITHUB_WORKSPACE}/src/automation/main.sh \
+            "${{ steps.github-app.outputs.token }}" \
             "${{ steps.git-user.outputs.name }}" \
             "${{ steps.git-user.outputs.email }}"

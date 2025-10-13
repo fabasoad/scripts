@@ -21,6 +21,7 @@ defaults:
 
 env:
   REGEX_DEFAULT: "^(.*)$"
+  GH_TOKEN: "${{ secrets.GH_TOKEN }}"
 
 jobs:
   run-automation:
@@ -28,47 +29,19 @@ jobs:
     runs-on: [ubuntu-latest]
     timeout-minutes: 5
     steps:
-      - name: Get GitHub token
-        uses: actions/create-github-app-token@v2
-        id: github-app
-        with:
-          app-id: ${{ vars.GH_APP_ALL_CONTENTS_CRUD_APP_ID }}
-          private-key: ${{ secrets.GH_APP_ALL_CONTENTS_CRUD_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v5
-        with:
-          token: "${{ steps.github-app.outputs.token }}"
 
       - name: Install mtoohey31/gh-foreach
-        env:
-          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: gh extension install mtoohey31/gh-foreach
 
-      - name: Install jq
-        uses: dcarbone/install-jq-action@v3
-
-      - name: Prepare git user
-        id: git-user
-        env:
-          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
-        run: |
-          app_name="${{ steps.github-app.outputs.app-slug }}[bot]"
-          user_id="$(gh api "/users/${app_name}" --jq .id)"
-          echo "email=${user_id}+${app_name}@users.noreply.github.com" >> "$GITHUB_OUTPUT"
-          echo "name=${app_name}" >> "$GITHUB_OUTPUT"
-
       - name: Run pre-automation scripts
-        env:
-          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: ./pre.sh
         working-directory: src/automation
 
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
-          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
           gh foreach run \
             --cleanup \

@@ -68,8 +68,6 @@ jobs:
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
-          # Only user's (not bot) token works here because gh foreach plugin
-          # uses /user/repos API endpoint to retrieve the list of repositories.
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
           gh foreach run \

@@ -6,7 +6,7 @@ get_latest_release() {
   cache_file_path="${CACHE_DIR_PATH}/latest_version_${key}"
 
   if [ -f "${cache_file_path}" ]; then
-    echo "Using cached value for ${repo}: $(head -n 1 ${cache_file_path})"
+    echo "Using cached value for ${repo}: $(head -n 1 ${cache_file_path})" 1>&2
   else
     version=$(gh api \
       -H "Accept: application/vnd.github+json" \

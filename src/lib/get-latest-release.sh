@@ -4,7 +4,7 @@ get_latest_release() {
   repo="${1}"
   key=$(echo "${repo}" | sed 's/\//_/g')
 
-  if [ -z "${STATE}_${key}"]; then
+  if [ -z "${STATE}_${key}" ]; then
     version=$(gh api \
       -H "Accept: application/vnd.github+json" \
       -H "X-GitHub-Api-Version: 2022-11-28" \

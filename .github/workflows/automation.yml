@@ -13,8 +13,6 @@ on:
         default: "^(.*)$"
         type: string
 
-permissions: write-all
-
 defaults:
   run:
     shell: sh
@@ -31,6 +29,8 @@ jobs:
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v5
+        with:
+          token: "${{ secrets.GH_TOKEN }}"
 
       - name: Install mtoohey31/gh-foreach
         run: gh extension install mtoohey31/gh-foreach

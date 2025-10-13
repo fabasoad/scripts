@@ -8,21 +8,30 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
-main() {
-  log_info "Running run-dependabot pre-automation script..."
+setup_pre_commit() {
+  if command -v pre-commit >/dev/null 2>&1; then
+    log_info "pre-commit is found at $(which pre-commit). Installation skipped."
+  else
+    pip install pre-commit
+  fi
+}
+
+setup_yq() {
+  ext=""
   case "${RUNNER_OS}" in
     "Linux")
       os="linux"
       ;;
     "Windows")
       os="windows"
+      ext=".exe"
       ;;
     "macOS")
       os="darwin"
       ;;
     *)
       log_error "Unsupported OS: ${RUNNER_OS}"
-      os=""
+      exit 0
       ;;
   esac
   case "${RUNNER_ARCH}" in
@@ -34,19 +43,23 @@ main() {
       ;;
     *)
       log_error "Unsupported architecture: ${RUNNER_ARCH}"
-      arch=""
+      exit 0
       ;;
   esac
-  if [ "${os}" = "windows" ] && [ "${arch}" = "arm64" ]; then
-    log_error "Windows ARM64 is not supported by dependabot/cli"
-    exit 0
+  if command -v yq${ext} >/dev/null 2>&1; then
+    log_info "yq is found at $(which yq${ext}). Installation skipped."
+  else
+    bundle="yq_${os}_${arch}${ext}"
+    gh release download --repo mikefarah/yq -p "${bundle}"
+    log_info "$(./${bundle} --version) installed successfully."
+    mv ${bundle} "${RUNNER_TEMP}/bin/yq${ext}"
   fi
-  if [ -n "${os}" ] && [ -n "${arch}"]; then
-    log_info "Installing dependabot..."
-    gh release download --repo dependabot/cli -p "*${os}-${arch}.tar.gz"
-    tar xzvf *.tar.gz >/dev/null 2>&1
-    mv dependabot "${RUNNER_TEMP}/bin/dependabot"
-  fi
+}
+
+main() {
+  log_info "Running pre-commit-prettier pre-automation script..."
+  setup_pre_commit
+  setup_yq
 }
 
 main "$@"

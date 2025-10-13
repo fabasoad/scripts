@@ -7,12 +7,32 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
-main() {
-  echo "Directory 2: $(pwd)"
+setup_git_config() {
+  token="${1}"
+  git_user_name="${2}"
+  git_user_email="${3}"
+
+  log_info "Setting up git config started."
+  git config url."https://${token}@github.com/".insteadOf "https://github.com/"
+  git config user.name "${git_user_name}"
+  git config user.email "${git_user_email}"
+  log_info "Setting up git config completed."
+}
+
+run_scripts() {
   log_info "Running automation scripts started."
-  ${AUTOMATION_DIR_PATH}/bump-pre-commit/main.sh
-  ${AUTOMATION_DIR_PATH}/run-dependabot/main.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit/main.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit-prettier/main.sh
   log_info "Running automation scripts completed."
+}
+
+main() {
+  token="${1}"
+  git_user_name="${2}"
+  git_user_email="${3}"
+
+  setup_git_config "${token}" "${git_user_name}" "${git_user_email}"
+  run_scripts
 
   set +e
   git diff --quiet

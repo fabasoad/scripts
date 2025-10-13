@@ -32,8 +32,9 @@ jobs:
         uses: actions/create-github-app-token@v2
         id: github-app
         with:
-          app-id: ${{ vars.GH_APP_CONTENTS_CRUD_APP_ID }}
-          private-key: ${{ secrets.GH_APP_CONTENTS_CRUD_PRIVATE_KEY }}
+          app-id: ${{ vars.GH_APP_ALL_CONTENTS_CRUD_APP_ID }}
+          private-key: ${{ secrets.GH_APP_ALL_CONTENTS_CRUD_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v5
@@ -41,27 +42,36 @@ jobs:
           token: "${{ steps.github-app.outputs.token }}"
 
       - name: Install mtoohey31/gh-foreach
+        env:
+          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: gh extension install mtoohey31/gh-foreach
 
       - name: Install jq
         uses: dcarbone/install-jq-action@v3
 
-      - name: Run pre-automation scripts
-        run: ./pre.sh
-        working-directory: src/automation
-
-      - name: Setup git config
+      - name: Prepare git user
+        id: git-user
+        env:
+          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
         run: |
           app_name="${{ steps.github-app.outputs.app-slug }}[bot]"
           user_id="$(gh api "/users/${app_name}" --jq .id)"
-          git config user.email "${user_id}+${app_name}@users.noreply.github.com"
-          git config user.name "${app_name}"
+          echo "email=${user_id}+${app_name}@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+          echo "name=${app_name}" >> "$GITHUB_OUTPUT"
+
+      - name: Run pre-automation scripts
+        env:
+          GH_TOKEN: "${{ steps.github-app.outputs.token }}"
+        run: ./pre.sh
+        working-directory: src/automation
 
       - name: Run automation scripts
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
+          # Only user's (not bot) token works here because gh foreach plugin
+          # uses /user/repos API endpoint to retrieve the list of repositories.
+          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
-          echo "Directory 1: $(pwd)"
           gh foreach run \
             --cleanup \
             --no-confirm \
@@ -69,4 +79,7 @@ jobs:
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
-            ./src/automation/main.sh
+            ${GITHUB_WORKSPACE}/src/automation/main.sh \
+            "${{ steps.github-app.outputs.token }}" \
+            "${{ steps.git-user.outputs.name }}" \
+            "${{ steps.git-user.outputs.email }}"

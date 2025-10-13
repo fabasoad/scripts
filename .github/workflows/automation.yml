@@ -72,7 +72,6 @@ jobs:
           # uses /user/repos API endpoint to retrieve the list of repositories.
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
-          echo "Directory 1: $(pwd)"
           gh foreach run \
             --cleanup \
             --no-confirm \

@@ -21,8 +21,8 @@ setup_git_config() {
 
 run_scripts() {
   log_info "Running automation scripts started."
-  ${AUTOMATION_DIR_PATH}/bump-pre-commit/main.sh
-  ${AUTOMATION_DIR_PATH}/run-dependabot/main.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit/main.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit-prettier/main.sh
   log_info "Running automation scripts completed."
 }
 
@@ -30,7 +30,6 @@ main() {
   token="${1}"
   git_user_name="${2}"
   git_user_email="${3}"
-  echo "Directory 2: $(pwd)"
 
   setup_git_config "${token}" "${git_user_name}" "${git_user_email}"
   run_scripts

@@ -4,7 +4,6 @@ SCRIPT_PATH=$(realpath "$0")
 AUTOMATION_DIR_PATH=$(dirname "${SCRIPT_PATH}")
 SRC_DIR_PATH=$(dirname "${AUTOMATION_DIR_PATH}")
 LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-BUMP_PRE_COMMIT_DIR_PATH="${SRC_DIR_PATH}/bump-pre-commit"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
@@ -13,7 +12,7 @@ main() {
   echo "${RUNNER_TEMP}/bin" >> "${GITHUB_PATH}"
 
   log_info "Running pre-automation scripts started."
-  ${AUTOMATION_DIR_PATH}/bump-pre-commit/pre.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit/pre.sh
   ${AUTOMATION_DIR_PATH}/run-dependabot/pre.sh
   log_info "Running pre-automation scripts completed."
 }

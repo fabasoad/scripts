@@ -9,11 +9,11 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/logging.sh"
 
 main() {
-  log_info "Running bump-pre-commit automation script..."
-  if [ -f ".pre-commit-config.yaml" ]; then
-    pre-commit autoupdate
+  log_info "Running pre-commit pre-automation script..."
+  if command -v pre-commit &> /dev/null; then
+    log_info "pre-commit is found at $(which pre-commit). Installation skipped."
   else
-    log_info ".pre-commit-config.yaml file is not found"
+    pip install pre-commit
   fi
 }
 

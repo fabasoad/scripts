@@ -7,6 +7,13 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 . "${LIB_DIR_PATH}/logging.sh"
 
+setup_git_config() {
+  log_info "Setting up git config started."
+  git config user.email "fabasoad@gmail.com"
+  git config user.name "fabasoad"
+  log_info "Setting up git config completed."
+}
+
 run_scripts() {
   log_info "Running automation scripts started."
   ${AUTOMATION_DIR_PATH}/pre-commit/main.sh
@@ -15,6 +22,7 @@ run_scripts() {
 }
 
 main() {
+  setup_git_config
   run_scripts
 
   set +e

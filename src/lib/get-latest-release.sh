@@ -3,16 +3,17 @@
 get_latest_release() {
   repo="${1}"
   key=$(echo "${repo}" | sed 's/\//_/g')
+  cache_file_path="${CACHE_DIR_PATH}/latest_version_${key}"
 
-  if [ -z "${STATE}_${key}" ]; then
+  if [ -f "${cache_file_path}" ]; then
+    echo "Using cached value for ${repo}: $(head -n 1 ${cache_file_path})"
+  else
     version=$(gh api \
       -H "Accept: application/vnd.github+json" \
       -H "X-GitHub-Api-Version: 2022-11-28" \
       "/repos/${repo}/releases?per_page=1" \
       --jq '.[].tag_name')
-    echo "${key}=${version}" >> "${GITHUB_STATE}"
-  else
-    echo "Using cached value for ${repo}: ${STATE}_${key}"
+    echo "${version}" > "${cache_file_path}"
   fi
-  echo "${STATE}_${key}"
+  head -n 1 "${cache_file_path}"
 }

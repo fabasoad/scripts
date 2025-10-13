@@ -79,7 +79,4 @@ jobs:
             --visibility public \
             --affiliations owner \
             --regex "${INPUT_REGEX}" \
-            ${GITHUB_WORKSPACE}/src/automation/main.sh \
-            "${{ steps.github-app.outputs.token }}" \
-            "${{ steps.git-user.outputs.name }}" \
-            "${{ steps.git-user.outputs.email }}"
+            ${GITHUB_WORKSPACE}/src/automation/main.sh

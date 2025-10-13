@@ -14,7 +14,7 @@ main() {
     ncu --upgrade --target patch
     if [ -f yarn.lock ]; then
       rm -f yarn.lock
-      yarn install
+      YARN_ENABLE_IMMUTABLE_INSTALLS=true yarn install
     elif [ -f package-lock.json ]; then
       rm -f package-lock.json
       npm install

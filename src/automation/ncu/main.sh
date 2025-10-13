@@ -13,7 +13,7 @@ main() {
   if [ -f "package.json" ]; then
     ncu --upgrade --target patch
     if [ -f yarn.lock ]; then
-      yarn install --immutable
+      YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
     elif [ -f package-lock.json ]; then
       npm install
     elif [ -f pnpm-lock.yaml ]; then

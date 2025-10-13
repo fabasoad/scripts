@@ -17,7 +17,7 @@ main() {
     elif [ -f package-lock.json ]; then
       npm install
     elif [ -f pnpm-lock.yaml ]; then
-      pnpm install
+      pnpm install --no-frozen-lockfile
     fi
     # If this is a GitHub Action, we need to rebuild the dist directory
     if [ -f dist/index.js ]; then

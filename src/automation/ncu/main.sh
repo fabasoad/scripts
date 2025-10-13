@@ -11,19 +11,14 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 main() {
   log_info "Running ncu automation script..."
   if [ -f "package.json" ]; then
+    ncu --upgrade --target patch
     if [ -f yarn.lock ]; then
-      yarn install
-      ncu --upgrade --target patch
       rm -f yarn.lock
-      YARN_ENABLE_IMMUTABLE_INSTALLS=true yarn install
+      YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
     elif [ -f package-lock.json ]; then
-      npm install
-      ncu --upgrade --target patch
       rm -f package-lock.json
       npm install
     elif [ -f pnpm-lock.yaml ]; then
-      pnpm install
-      ncu --upgrade --target patch
       rm -f pnpm-lock.yaml
       pnpm install
     fi

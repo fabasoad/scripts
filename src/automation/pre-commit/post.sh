@@ -11,7 +11,7 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 main() {
   log_info "Running pre-commit post-automation script..."
   if command -v pre-commit >/dev/null 2>&1; then
-    pip uninstall pre-commit
+    pip uninstall -y pre-commit
   fi
 }
 

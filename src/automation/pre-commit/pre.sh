@@ -10,7 +10,7 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 main() {
   log_info "Running pre-commit pre-automation script..."
-  if command -v pre-commit &> /dev/null; then
+  if command -v pre-commit >/dev/null 2>&1; then
     log_info "pre-commit is found at $(which pre-commit). Installation skipped."
   else
     pip install pre-commit

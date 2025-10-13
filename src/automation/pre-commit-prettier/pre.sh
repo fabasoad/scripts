@@ -9,7 +9,7 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/logging.sh"
 
 setup_pre_commit() {
-  if command -v pre-commit &> /dev/null; then
+  if command -v pre-commit >/dev/null 2>&1; then
     log_info "pre-commit is found at $(which pre-commit). Installation skipped."
   else
     pip install pre-commit
@@ -46,7 +46,7 @@ setup_yq() {
       exit 0
       ;;
   esac
-  if command -v yq${ext} &> /dev/null; then
+  if command -v yq${ext} >/dev/null 2>&1; then
     log_info "yq is found at $(which yq${ext}). Installation skipped."
   else
     bundle="yq_${os}_${arch}${ext}"

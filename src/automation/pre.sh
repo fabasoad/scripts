@@ -13,7 +13,7 @@ main() {
 
   log_info "Running pre-automation scripts started."
   ${AUTOMATION_DIR_PATH}/pre-commit/pre.sh
-  ${AUTOMATION_DIR_PATH}/run-dependabot/pre.sh
+  ${AUTOMATION_DIR_PATH}/pre-commit-prettier/pre.sh
   log_info "Running pre-automation scripts completed."
 }
 

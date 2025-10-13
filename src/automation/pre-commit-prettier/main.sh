@@ -9,11 +9,14 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/get-latest-release.sh"
 . "${LIB_DIR_PATH}/logging.sh"
 
+get_current_version() {
+  yq '.repos[].hooks[].additional_dependencies[] | select(test("prettier@")) | sub("prettier@", "")' ".pre-commit-config.yaml"
+}
+
 main() {
   log_info "Running pre-commit-prettier automation script..."
   if [ -f ".pre-commit-config.yaml" ]; then
-    dep=$(yq '.repos[] | select(.repo == "local") | .hooks[] | select(.id == "prettier") | .additional_dependencies[] | select(test("^prettier"))' ".pre-commit-config.yaml")
-    current_version=$(echo "${dep}" | sed -E 's/^prettier@//')
+    current_version=$(get_current_version)
     latest_version=$(get_latest_release "prettier/prettier" | sed -E 's/^v//')
     if [ "${current_version}" != "${latest_version}" ]; then
       log_info "Updating prettier from version ${current_version} to ${latest_version}"

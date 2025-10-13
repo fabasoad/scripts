@@ -5,9 +5,7 @@ get_latest_release() {
   key=$(echo "${repo}" | sed 's/\//_/g')
   cache_file_path="${CACHE_DIR_PATH}/latest_version_${key}"
 
-  if [ -f "${cache_file_path}" ]; then
-    echo "Using cached value for ${repo}: $(head -n 1 ${cache_file_path})" 1>&2
-  else
+  if [ ! -f "${cache_file_path}" ]; then
     version=$(gh api \
       -H "Accept: application/vnd.github+json" \
       -H "X-GitHub-Api-Version: 2022-11-28" \

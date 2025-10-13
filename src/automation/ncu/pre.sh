@@ -16,9 +16,18 @@ setup_ncu() {
   fi
 }
 
+setup_pnpm() {
+  if command -v pnpm >/dev/null 2>&1; then
+    log_info "pnpm is found at $(which pnpm). Installation skipped."
+  else
+    npm install -g pnpm
+  fi
+}
+
 main() {
   log_info "Running ncu pre-automation script..."
   setup_ncu
+  setup_pnpm
 }
 
 main "$@"

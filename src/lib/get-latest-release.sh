@@ -11,6 +11,8 @@ get_latest_release() {
       "/repos/${repo}/releases?per_page=1" \
       --jq '.[].tag_name')
     echo "${key}=${version}" >> "${GITHUB_STATE}"
+  else
+    echo "Using cached value for ${repo}: ${STATE}_${key}"
   fi
   echo "${STATE}_${key}"
 }

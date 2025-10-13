@@ -8,14 +8,10 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/logging.sh"
 
 setup_git_config() {
-  token="${1}"
-  git_user_name="${2}"
-  git_user_email="${3}"
-
   log_info "Setting up git config started."
-  git config url."https://${token}@github.com/".insteadOf "https://github.com/"
-  git config user.name "${git_user_name}"
-  git config user.email "${git_user_email}"
+  git config user.email "fabasoad@gmail.com"
+  git config user.name "fabasoad"
+  git config url."https://${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
   log_info "Setting up git config completed."
 }
 
@@ -27,11 +23,7 @@ run_scripts() {
 }
 
 main() {
-  token="${1}"
-  git_user_name="${2}"
-  git_user_email="${3}"
-
-  setup_git_config "${token}" "${git_user_name}" "${git_user_email}"
+  setup_git_config
   run_scripts
 
   set +e

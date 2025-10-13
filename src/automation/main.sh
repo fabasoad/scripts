@@ -17,6 +17,7 @@ setup_git_config() {
 
 run_scripts() {
   log_info "Running automation scripts started."
+  ${AUTOMATION_DIR_PATH}/ncu/main.sh
   ${AUTOMATION_DIR_PATH}/pre-commit/main.sh
   ${AUTOMATION_DIR_PATH}/pre-commit-prettier/main.sh
   log_info "Running automation scripts completed."

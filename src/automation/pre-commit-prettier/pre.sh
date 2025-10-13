@@ -52,7 +52,7 @@ setup_yq() {
     bundle="yq_${os}_${arch}${ext}"
     gh release download --repo mikefarah/yq -p "${bundle}"
     log_info "$(./${bundle} --version) installed successfully."
-    mv ${bundle} "${RUNNER_TEMP}/bin/yq${ext}"
+    mv ${bundle} "${BIN_DIR_PATH}/yq${ext}"
   fi
 }
 

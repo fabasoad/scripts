@@ -31,7 +31,7 @@ main() {
     log_info ".pre-commit-config.yaml file is not found"
   fi
 
-  main_post_process
+  main_post_process "${AUTOMATION_BASE_DIR_PATH}"
 }
 
 main "$@"

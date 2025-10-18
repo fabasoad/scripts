@@ -44,7 +44,7 @@ print_affected_repos() {
   echo "::notice title=Affected repositories::${affected_repos}"
 }
 
-main_post_process() {
+post_process() {
   validate_no_changes_left
   print_affected_repos
 }
@@ -66,7 +66,7 @@ main() {
     log_info "No changes were made by automation scripts"
   fi
 
-  main_post_process
+  post_process
 }
 
 main "$@"

@@ -12,6 +12,10 @@ log_info() {
   log "info" "$(basename "$0")" "${1}"
 }
 
+log_warn() {
+  log "warn" "$(basename "$0")" "${1}"
+}
+
 log_error() {
   log "error" "$(basename "$0")" "${1}"
 }

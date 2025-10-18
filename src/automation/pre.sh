@@ -16,6 +16,10 @@ setup_environment() {
   cache_dir_path="${RUNNER_TEMP}/.cache"
   mkdir -p "${cache_dir_path}"
   echo "CACHE_DIR_PATH=${cache_dir_path}" >> "${GITHUB_ENV}"
+
+  changed_repos_file_path="${cache_dir_path}/changed_repos.txt"
+  touch "${changed_repos_file_path}"
+  echo "CHANGED_REPOS_FILE_PATH=${changed_repos_file_path}" >> "${GITHUB_ENV}"
 }
 
 main() {

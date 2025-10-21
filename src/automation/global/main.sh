@@ -10,8 +10,14 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
 print_affected_repos() {
   affected_repos=$(sort "${CHANGED_REPOS_FILE_PATH}" | uniq | awk '{printf "%s%s", sep, $0; sep = ", " } END {print ""}')
-  log_info "Affected repositories: ${affected_repos}"
-  echo "::notice title=Affected repositories::${affected_repos}"
+  if [ -z "${affected_repos}" ]; then
+    msg="No repositories were affected by the automation scripts."
+    log_info "${msg}"
+    echo "::notice title=Affected repositories::${msg}"
+  else
+    log_info "Affected repositories: ${affected_repos}"
+    echo "::notice title=Affected repositories::${affected_repos}"
+  fi
 }
 
 post_process() {

@@ -1,5 +1,6 @@
 import subprocess
 import re
+import sys
 
 def get_repo_name():
     # Get the remote.origin.url from git config
@@ -22,4 +23,5 @@ if __name__ == "__main__":
     if result:
         print(result)
     else:
-        print("Could not parse git remote URL.")
+        print("unknown/unknown")
+        print("Could not parse git remote URL.", file=sys.stderr)

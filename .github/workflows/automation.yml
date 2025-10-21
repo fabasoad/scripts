@@ -44,5 +44,5 @@ jobs:
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
         with:
-          main: ${GITHUB_WORKSPACE}/src/automation/global/main.sh
+          main: ${GITHUB_WORKSPACE}/src/automation/global/main.sh "${INPUT_REGEX}"
           post: ${GITHUB_WORKSPACE}/src/automation/global/post.sh

@@ -2,7 +2,8 @@
 
 SCRIPT_PATH=$(realpath "$0")
 SCRIPT_DIR_PATH=$(dirname "${SCRIPT_PATH}")
-AUTOMATION_DIR_PATH=$(dirname "${SCRIPT_DIR_PATH}")
+HOOKS_DIR_PATH=$(dirname "${SCRIPT_DIR_PATH}")
+AUTOMATION_DIR_PATH=$(dirname "${HOOKS_DIR_PATH}")
 SRC_DIR_PATH=$(dirname "${AUTOMATION_DIR_PATH}")
 LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
@@ -21,6 +22,7 @@ main() {
     if [ -n "${current_version}" ] && [ -n "${latest_version}" ] && [ "${current_version}" != "${latest_version}" ]; then
       log_info "Updating prettier from version ${current_version} to ${latest_version}"
       yq -i '(.repos[] | select(.repo == "local") | .hooks[] | select(.id == "prettier") | .additional_dependencies[] | select(test("^prettier"))) = "prettier@'"${latest_version}"'"' ".pre-commit-config.yaml"
+      git add .pre-commit-config.yaml
     else
       log_info "prettier is already at the latest ${latest_version} version"
     fi

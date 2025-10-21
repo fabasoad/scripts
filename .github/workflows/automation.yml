@@ -37,20 +37,12 @@ jobs:
 
       - name: Run pre-automation scripts
         run: ./pre.sh
-        working-directory: src/automation
+        working-directory: src/automation/global
 
       - name: Run automation scripts
         uses: pyTooling/Actions/with-post-step@v6.4.0
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
         with:
-          main: |
-            gh foreach run \
-              --cleanup \
-              --no-confirm \
-              --shell $(which sh) \
-              --visibility public \
-              --affiliations owner \
-              --regex "${INPUT_REGEX}" \
-              ${GITHUB_WORKSPACE}/src/automation/main.sh
-          post: ${GITHUB_WORKSPACE}/src/automation/post.sh
+          main: ${GITHUB_WORKSPACE}/src/automation/global/main.sh "${INPUT_REGEX}"
+          post: ${GITHUB_WORKSPACE}/src/automation/global/post.sh

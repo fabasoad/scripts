@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 SCRIPT_PATH=$(realpath "$0")
-BUMP_PRE_COMMIT_DIR_PATH=$(dirname "${SCRIPT_PATH}")
-AUTOMATION_DIR_PATH=$(dirname "${BUMP_PRE_COMMIT_DIR_PATH}")
+SCRIPT_DIR_PATH=$(dirname "${SCRIPT_PATH}")
+HOOKS_DIR_PATH=$(dirname "${SCRIPT_DIR_PATH}")
+AUTOMATION_DIR_PATH=$(dirname "${HOOKS_DIR_PATH}")
 SRC_DIR_PATH=$(dirname "${AUTOMATION_DIR_PATH}")
 LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 
@@ -30,7 +31,7 @@ setup_yq() {
       os="darwin"
       ;;
     *)
-      log_error "Unsupported OS: ${RUNNER_OS}"
+      log_error "Unsupported OS: ${RUNNER_OS:-"N/A"}"
       exit 0
       ;;
   esac
@@ -42,7 +43,7 @@ setup_yq() {
       arch="arm64"
       ;;
     *)
-      log_error "Unsupported architecture: ${RUNNER_ARCH}"
+      log_error "Unsupported architecture: ${RUNNER_ARCH:-"N/A"}"
       exit 0
       ;;
   esac

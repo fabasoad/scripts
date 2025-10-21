@@ -38,15 +38,8 @@ validate_no_changes_left() {
   fi
 }
 
-print_affected_repos() {
-  affected_repos=$(sort "${CHANGED_REPOS_FILE_PATH}" | uniq | awk '{printf "%s%s", sep, $0; sep = ", " } END {print ""}')
-  log_info "Affected repositories: ${affected_repos}"
-  echo "::notice title=Affected repositories::${affected_repos}"
-}
-
 post_process() {
   validate_no_changes_left
-  print_affected_repos
 }
 
 main() {

@@ -44,13 +44,5 @@ jobs:
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
         with:
-          main: |
-            gh foreach run \
-              --cleanup \
-              --no-confirm \
-              --shell $(which sh) \
-              --visibility public \
-              --affiliations owner \
-              --regex "${INPUT_REGEX}" \
-              ${GITHUB_WORKSPACE}/src/automation/main.sh
+          main: ${GITHUB_WORKSPACE}/src/automation/run.sh
           post: ${GITHUB_WORKSPACE}/src/automation/post.sh

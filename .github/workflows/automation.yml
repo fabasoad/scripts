@@ -40,7 +40,7 @@ jobs:
         working-directory: src/automation/global
 
       - name: Run automation scripts
-        uses: pyTooling/Actions/with-post-step@v6.4.0
+        uses: pyTooling/Actions/with-post-step@v6.7.0
         env:
           INPUT_REGEX: "${{ github.event.inputs.regex || env.REGEX_DEFAULT }}"
         with:

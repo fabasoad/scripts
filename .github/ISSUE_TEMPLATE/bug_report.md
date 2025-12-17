@@ -30,7 +30,7 @@ If applicable, add screenshots to help explain your problem.
 ## Technical information (please complete the following information)
 
 - OS: [e.g. Windows 10 Enterprise v.1909 (OS Build 18363.720)]
-- `setup-ciao-action` version [e.g. 0.1.0]
+- `scripts` version [e.g. 0.1.0]
 
 ## Additional context
 

@@ -10,7 +10,6 @@ Repository with useful automation that I use for various needs.
 ## Automation
 
 - [Organize photos](./docs/organize-photos.md)
-- [Automation](./docs/automation.md)
 
 ## Contributions
 
